@@ -1,0 +1,74 @@
+app/http/controller - se crea una clase tipo: OrdenesTrabajoController.php: (funcion que valida el modelo)
+
+    public function cerrarOT(Request $request)
+    {
+        $Result = $this->Modelo->cerrarOT($request->toArray());
+        return $this->respuesta($Result,config('mensajes.cerrarOT.PiezaNotFound'));
+    }
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+app/http/model - se crea una clase tipo: OrdenesTrabajo.php: (funcin que llama al sp)
+
+    public function cerrarOT(array $Params)
+    {
+        return $this->db->select(Utils::ParamsToSP('dbo.EN_SP_ENVIOS_CERRAR_OT',$Params),Utils::ConvertParams($Params));
+    }
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+app/models/validaciones.php
+
+static $CerrarOT = [
+        'campos' => [
+            
+            'POT_ID' => 'required|integer',
+            'PID_USUARIO'    => 'required|integer',
+            'FECHA_COLECTA'  => 'required|date',
+            'MOT_NO_RETIRO'     => 'nullable|integer',
+            'LISTA_MOTIVOS'     => 'nullable|string',
+            'LISTA_PIE_CODIGO'  => 'nullable|string'
+        ],
+        'mensajes' =>  [
+            'POT_ID.required'  => 'El campo OT_ID es obligatorio.',
+            'PID_USUARIO.required'  => 'El campo PID_USUARIO es obligatorio.',
+            'FECHA_COLECTA.required'  => 'El campo FECHA_COLECTA es obligatorio.',
+            'CONTROLADOR.required'  => 'El campo CONTROLADOR es obligatorio.',
+        ]
+    ];
+
+    public static function ArrayValidaciones($ActionName)
+    {
+        $aMap = [
+          'VerAceptacion'    => self::$VerAceptacion,
+          'ValidarOT'        => self::$ValidarOT,
+          'ImposiciónCarga'  => self::$ImposicionCarga,
+          'GuardarOT'        => self::$GuardarOT,
+          'ProductoXcliente' => self::$ProductoXcliente,
+          'ConsultarOT'      => self::$ConsultarOT,
+          'CerrarOT'      => self::$CerrarOT,
+        ];
+        return $aMap[$ActionName];
+    }
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+config/mensajes.php
+    'cerrarOT' => [
+        'PiezaNotFound' => 'Error al intentar cerrar OT.'
+    ],
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+config/paramsMap.php
+return [
+    'CLI_CODIGO'    => 'iCLI_CODIGO',
+    'NIS'           => 'cNIS',
+    'PNIS'          => 'pNIS',
+    'PRESUPUESTO'   => 'iPRESUPUESTO',
+    'PIE_CODIGO'    => 'iPIE_CODIGO',
+    'PIE_PESO_REAL' => 'dPIE_PESO_REAL',
+    'LISTA_PIE_CODIGO' =>  'pLISTA_PIE_CODIGO'
+];
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+routes/api.php
+$router->group(['prefix' => 'cargaOT'], function () use ($router) {
+        $router->get('validarOT', 'OrdenesTrabajoController@validarOT');
+        $router->get('consultarOT', 'OrdenesTrabajoController@consultarOT');
+        $router->post('guardarOT', 'OrdenesTrabajoController@guardarOT');
+        $router->post('imposicionCarga', 'OrdenesTrabajoController@imposicionCarga');
+        $router->post('cerrarOT', 'OrdenesTrabajoController@cerrarOT');
+    });

@@ -1,0 +1,75 @@
+-----------------------------------------------------------------------------------
+INSTALAR COMPOSER
+-----------------------------------------------------------------------------------
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "if (hash_file('sha384', 'composer-setup.php') === '906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+paso 1 copiar todo eso en terminal
+----------------------------------------------------------------------
+sudo mv composer.phar /usr/local/bin/composer
+paso 2
+----------------------------------------------------------------------
+php composer.phar
+paso 3 ejecutar
+----------------------------------------------------------------------
+entrar en packagist.org y ver el paquete que quieras
+paginacion: composer require stefangabos/zebra_pagination
+-----------------------------------------------------------------------------------
+----------------------------------LARAVEL-------------------------------------------------
+-----------------------------------------------------------------------------------
+EXTENSIONES NECESARIAS O RECOMENDADAS
+PHP >= 7.3
+BCMath PHP Extension
+Ctype PHP Extension
+Fileinfo PHP Extension
+JSON PHP Extension
+Mbstring PHP Extension
+OpenSSL PHP Extension
+PDO PHP Extension
+Tokenizer PHP Extension
+XML PHP Extension
+-----------------------------------------------------------------------------------
+CREAR UN PROYECTO
+composer create-project laravel/laravel mi_proyecto_nombre --prefer-dist
+-----------------------------------------------------------------------------------
+LEVANTAR UN SERVIDOR:
+php artisan serve
+-----------------------------------------------------------------------------------
+
+
+INSTALAR EXTENSIONES
+1- BAJARSE LA MISMA POR GOOGLE (TIENE QUE SER .dll)
+2- METERLA DENTRO DE LA CARPETA bin/php/php7.2.4/ext
+3- ENTRAR A PHP.INI Y BUSCRA LA SECCION EXTENSION
+4- AL FINAL DEL LISTADO PONER (SIN ;) extension=php_nombre
+-----------------------------------------------------------------------------------
+HACER UN HOST VIRTUAL CON WAMP SERVER:
+https://victorroblesweb.es/2016/03/26/crear-varios-hosts-virtuales-en-wampserver/
+-----------------------------------------------------------------------------------
+CARPETAS:
+EN LA CARPETA 
+APP SE CONSTRUYE LA APP.
+CONFIG TIENE LOS ARCHIVOS DE CONFIGURACION DE LA APP.
+DATABASE INCLUYE LAS MIGRACIONES Y ITEMS DE BASE DE DATOS
+PUBLIC CONTIENE ARCHIVOS PUBLICOS, COMO EL INDEX.PHP
+RESOURCE LOS RECURSOS
+ROUTES LAS RUTAS DE LA APPSTORAGE ALMACENA ARCHIVOS
+VENDOR CONTIENE LAS EXTENSIONES INSTALADAS CON COMPOSER
+-----------------------------------------------------------------------------------
+EN ROUTES/WEB.PHP SE CONFIGURAN LAS RUTAS
+-----------------------------------------------------------------------------------
+agregar los php de VISTA
+/home/www/A-PHP/laravel/resources/views 
+las extenciones son archivo.blade.php
+-----------------------------------------------------------------------------------
+USAR CONSOLA ARTISAN
+php artisan serve //levanta un servidor
+php artisan help //muestra todos los comandos disponibles para utilizar con laravel
+php artisan list //COMANDOS MAS UTILES
+php artisan route:list //MUESTRA TODAS LAS RUTAS
+php artisan migrate //crea las acciones de las migraciones
+php artisan make:controller [nombreControlador]
+php artisan db:seed //ejecuta el seed
+php artisan migrate:fresh //borra todo y lo vuelve a crear
+-----------------------------------------------------------------------------------
